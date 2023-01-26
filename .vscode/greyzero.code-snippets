@@ -1,0 +1,35 @@
+{
+	"greyzero Function Component": {
+		"scope": "javascriptreact,typescriptreact",
+		"prefix": "grfc",
+		"body": [
+			"import React from 'react'",
+			"import styled from 'styled-components'",
+			"",
+			"export default function ${1:${TM_DIRECTORY/^.+[\\/\\\\]+(.*)$/$1/}}() {",
+			"     return (",
+			"          <div>",
+			"",
+			"          </div>",
+			"     );",
+			"}",
+			"",
+			""
+		],
+		"description": "greyzero Function Component"
+	},
+	"ignore eslint": {
+		"prefix": "ign",
+		"body": [
+			" // eslint-disable-next-line"
+		],
+		"description": "ignore eslint"
+	},
+	"import service": {
+		"prefix": "ims",
+		"body": [
+			"import service from '@/util/service'"
+		],
+		"description": "import service"
+	}
+}
