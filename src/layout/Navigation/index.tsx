@@ -1,51 +1,51 @@
-import * as React from 'react';
+import { useCallback } from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
-import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
-import Menu from '@mui/material/Menu';
-import MenuIcon from '@mui/icons-material/Menu';
 import Container from '@mui/material/Container';
-import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
-import Tooltip from '@mui/material/Tooltip';
-import MenuItem from '@mui/material/MenuItem';
-import AdbIcon from '@mui/icons-material/Adb';
 import Logo from "@/assets/images/logo.jpeg"
 import styled from "styled-components"
-
-const pages = ['검색', "등록한 레포지토리", "issues"];
+import { pages } from "./values"
+import { pageListType } from './types';
+import { useNavigate, Outlet } from "react-router-dom";
 
 export default function Navigation() {
+     const navigate = useNavigate()
 
-     const handleOpenNavMenu = (page: string) => {
-          console.log(page);
-     };
-
-
+     const handleOpenNavMenu = useCallback((page: string) => {
+          navigate(`/${page}`)
+     }, [])
 
      return (
-          <AppBar position="static">
-               <Container maxWidth="xl">
-                    <Toolbar disableGutters>
-                         <StyledLogoWrapper />
-                         <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-                              {pages.map((page) => (
-                                   <Button
-                                        key={page}
-                                        onClick={() => handleOpenNavMenu(page)}
-                                        sx={{ my: 2, color: 'white', display: 'block' }}
-                                   >
-                                        {page}
-                                   </Button>
-                              ))}
-                         </Box>
-                    </Toolbar>
-               </Container>
-          </AppBar >
+          <>
+               <AppBar position="static">
+                    <Container maxWidth="xl">
+                         <Toolbar disableGutters>
+                              <StyledLogoWrapper />
+                              <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+                                   {pages.map((page: pageListType) => {
+                                        return <Button
+                                             key={page.key}
+                                             onClick={() => handleOpenNavMenu(page.key)}
+                                             sx={{ my: 2, color: 'white', display: 'block' }}
+                                        >
+                                             {page.label}
+                                        </Button>
+                                   })
+                                   }
+                              </Box>
+                         </Toolbar>
+                    </Container>
+               </AppBar >
+               <Outlet />
+          </>
      );
 }
+
+
+
+
 
 const StyledLogoWrapper = styled.div`
      width: 50px;
