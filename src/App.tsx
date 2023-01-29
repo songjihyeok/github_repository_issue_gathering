@@ -37,10 +37,10 @@ const router = createBrowserRouter([
     ]
   },
 
-  {
-    path: "/*",
-    element: <Navigate to="/nopage" replace={true}></Navigate>
-  },
+  // {
+  //   path: "/*",
+  //   element: <Navigate to="/nopage" replace={true}></Navigate>
+  // },
 ]);
 
 function App() {

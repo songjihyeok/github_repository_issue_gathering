@@ -15,7 +15,7 @@ export default function Navigation() {
 
      const handleOpenNavMenu = useCallback((page: string) => {
           navigate(`/${page}`)
-     }, [])
+     }, [navigate])
 
      return (
           <>

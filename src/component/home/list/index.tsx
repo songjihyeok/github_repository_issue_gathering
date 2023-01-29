@@ -1,42 +1,44 @@
 import React, { useEffect } from 'react'
 import styled from 'styled-components'
-import axios from "axios"
-import Card from "../card"
-import { Octokit } from "octokit"
-
-export default function List() {
-
-     const octokit = new Octokit({
-          auth: process.env.GITHUB_PRIVATE_KEY
-     })
+import Card from "../Card"
+import { itemInCludeLikedInterface } from '@/pages/Home/type'
 
 
-     useEffect(() => {
-          const getCardList = async () => {
-               const result = await octokit.request('GET /search/repositories?q=namelink-frontend', {})
-               console.log("result", result)
-          }
-          getCardList()
-     }, [])
+export default function List({ searchResultList, setSearchResultList }: {
+     searchResultList: itemInCludeLikedInterface[],
+     setSearchResultList: React.Dispatch<React.SetStateAction<itemInCludeLikedInterface[]>>
+}) {
+
+     const likeHandler = (element: itemInCludeLikedInterface) => {
+
+          const likeHandledResultList = searchResultList.map((item) => {
+               if (item.id === element.id) {
+                    return {
+                         ...item,
+                         liked: !element.liked
+                    }
+               } else {
+                    return item
+               }
+          })
+          setSearchResultList(likeHandledResultList)
+     }
+
+
+
+
 
 
 
      return (
-          <div>
-               <Card></Card>
-               <Card></Card>
-               <Card></Card>
-               <Card></Card>
-               <Card></Card>
-               <Card></Card>
-               <Card></Card>
-               <Card></Card>
-               <Card></Card>
-               <Card></Card>
-               <Card></Card>
-               <Card></Card>
-               <Card></Card>
-          </div>
-     );
+          <>
+               {searchResultList.map((element: itemInCludeLikedInterface, index: number) => {
+                    return <Card key={index}
+                         item={element}
+                         likeHandler={likeHandler}
+                    />
+               })}
+          </>
+     )
 }
 
