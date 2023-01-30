@@ -1,5 +1,5 @@
 import React from 'react'
-import Card from "../Card"
+import Card from "../../common/Card"
 import { itemInCludeLikedInterface } from '@/pages/Home/type'
 
 
@@ -7,8 +7,10 @@ export default function List({ searchResultList, setSearchResultList }: {
      searchResultList: itemInCludeLikedInterface[],
      setSearchResultList: React.Dispatch<React.SetStateAction<itemInCludeLikedInterface[]>>
 }) {
-     const localLikedIdList = localStorage.getItem("likedList") ?? JSON.stringify({ data: [] })
-     const likedIdList = JSON.parse(localLikedIdList).data ?? []
+     const localLikedIdList = localStorage.getItem("likedIdList") ?? JSON.stringify({ data: [] })
+     const likedIdList = JSON.parse(localLikedIdList).data
+          .map((element: itemInCludeLikedInterface) => element.id) ?? []
+
      const likedCheckedSearchResultList = searchResultList.map((element) => {
           if (likedIdList.includes(element.id)) {
                return {
@@ -30,26 +32,39 @@ export default function List({ searchResultList, setSearchResultList }: {
                     return item
                }
           })
+
           setSearchResultList(likeHandledResultList)
-          setLocalStorage(element.id)
+          setLocalStorage(element)
      }
 
-     const setLocalStorage = (id: number) => {
-          const localLikedIdList = localStorage.getItem("likedList") ?? JSON.stringify({ data: [] })
-          const gotLikedIdList = JSON.parse(localLikedIdList)?.data ?? []
-          if (gotLikedIdList.includes(id)) {
+     const setLocalStorage = (item: itemInCludeLikedInterface) => {
+          const localLikedList = localStorage.getItem("likedIdList") ?? JSON.stringify({ data: [] })
+          const likedList = JSON.parse(localLikedList)?.data
+          const isIncluded = likedList.find((element: itemInCludeLikedInterface) => element.id === item.id)
+          if (isIncluded) {
                const removedLikedList = JSON.stringify(
                     {
-                         data: gotLikedIdList
-                              .filter((element: number) => element !== id)
+                         data: likedList
+                              .filter((element: itemInCludeLikedInterface) => element.id !== item.id)
                     })
-               return localStorage.setItem("likedList", removedLikedList)
+               return localStorage.setItem("likedIdList", removedLikedList)
           } else {
+               const modifiedItem = {
+                    id: item?.id,
+                    description: item?.description,
+                    issues_url: item?.issues_url,
+                    full_name: item?.full_name,
+                    forks_count: item?.forks_count,
+                    created_at: item?.created_at,
+                    html_url: item?.html_url,
+                    liked: true
+               }
+               const likedCheckedItem = { ...modifiedItem, liked: true }
                const updatedLikedList = JSON.stringify(
                     {
-                         data: [...gotLikedIdList, id]
+                         data: [...likedList, likedCheckedItem]
                     })
-               return localStorage.setItem("likedList", updatedLikedList)
+               return localStorage.setItem("likedIdList", updatedLikedList)
           }
      }
 

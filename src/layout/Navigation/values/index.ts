@@ -5,7 +5,7 @@ export const pages = [{
      label: '메인',
 },
 {
-     key: pagesType.BOOKMARK,
+     key: pagesType.Liked,
      label: "등록한 레포지토리",
 },
 {

@@ -6,7 +6,7 @@ import {
 import Home from "@/pages/Home"
 import Navigation from "@/layout/Navigation"
 import Nopage from "@/pages/Nopage"
-import Bookmark from "./pages/Bookmark";
+import Liked from "./pages/Liked";
 import Issue from "./pages/Issue";
 
 const router = createBrowserRouter([
@@ -27,8 +27,8 @@ const router = createBrowserRouter([
         element: <Home />
       },
       {
-        path: "/bookmark",
-        element: <Bookmark />
+        path: "/liked",
+        element: <Liked />
       },
       {
         path: "/issue",
@@ -37,10 +37,10 @@ const router = createBrowserRouter([
     ]
   },
 
-  // {
-  //   path: "/*",
-  //   element: <Navigate to="/nopage" replace={true}></Navigate>
-  // },
+  {
+    path: "/*",
+    element: <Navigate to="/nopage" replace={true}></Navigate>
+  },
 ]);
 
 function App() {

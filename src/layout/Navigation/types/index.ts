@@ -5,6 +5,6 @@ export interface pageListType {
 
 export enum pagesType {
      HOME = "home",
-     BOOKMARK = "bookmark",
+     Liked = "liked",
      ISSUES = "issue"
 }

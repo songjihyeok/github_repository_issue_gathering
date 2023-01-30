@@ -10,10 +10,10 @@ import { itemInCludeLikedInterface } from '@/pages/Home/type';
 import Grid from '@mui/material/Unstable_Grid2';
 
 
-export default function Card({ item, likeHandler }:
+export default function Card({ item, likeHandler = () => { } }:
      {
           item: itemInCludeLikedInterface,
-          likeHandler: (element: itemInCludeLikedInterface) => void
+          likeHandler?: (element: itemInCludeLikedInterface) => void
      }) {
 
 
