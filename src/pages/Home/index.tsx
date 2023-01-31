@@ -11,7 +11,6 @@ const octokit = new Octokit({
 })
 
 
-
 export default function Home() {
      const [query, setQuery] = useState<string>("hello");
      const [searchResultList, setSearchResultLIst] = useState<itemInCludeLikedInterface[]>([])
