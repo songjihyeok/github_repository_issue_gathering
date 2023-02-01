@@ -7,8 +7,4 @@ export const pages = [{
 {
      key: pagesType.Liked,
      label: "등록한 레포지토리",
-},
-{
-     key: pagesType.ISSUES,
-     label: "issue"
-}]
+},]

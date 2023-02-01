@@ -7,7 +7,6 @@ import Home from "@/pages/Home"
 import Navigation from "@/layout/Navigation"
 import Nopage from "@/pages/Nopage"
 import Liked from "./pages/Liked";
-import Issue from "./pages/Issue";
 
 const router = createBrowserRouter([
   {
@@ -29,11 +28,7 @@ const router = createBrowserRouter([
       {
         path: "/liked",
         element: <Liked />
-      },
-      {
-        path: "/issue",
-        element: <Issue />
-      },
+      }
     ]
   },
 

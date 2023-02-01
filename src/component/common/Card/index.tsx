@@ -8,7 +8,16 @@ import Typography from '@mui/material/Typography';
 import Like from "@/component/common/like"
 import { itemInCludeLikedInterface } from '@/pages/Home/type';
 import Grid from '@mui/material/Unstable_Grid2';
+import CardActions from '@mui/material/CardActions';
+import IconButton, { IconButtonProps } from '@mui/material/IconButton';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import CardContent from '@mui/material/CardContent';
+import Collapse from '@mui/material/Collapse';
+import Issue from '@/component/Issue';
 
+interface ExpandMoreProps extends IconButtonProps {
+     expand: boolean;
+}
 
 export default function Card({ item, likeHandler = () => { } }:
      {
@@ -16,7 +25,12 @@ export default function Card({ item, likeHandler = () => { } }:
           likeHandler?: (element: itemInCludeLikedInterface) => void
      }) {
 
+     const [expanded, setExpanded] = useState(false)
 
+     const handleExpandClick = () => {
+          console.log("expanded")
+          setExpanded(!expanded)
+     }
 
      return (
           <List sx={{ width: '100%', bgcolor: 'background.paper' }}>
@@ -42,6 +56,22 @@ export default function Card({ item, likeHandler = () => { } }:
                          <Grid xsOffset={1} xs={1}>
                               <Like liked={item.liked} onClick={() => likeHandler(item)}></Like>
                          </Grid>
+                         <CardActions disableSpacing>
+                              <p> issues:</p>
+                              <ExpandMore
+                                   expand={expanded}
+                                   onClick={handleExpandClick}
+                                   aria-expanded={expanded}
+                                   aria-label="show more"
+                              >
+                                   <ExpandMoreIcon />
+                              </ExpandMore>
+                         </CardActions>
+                         <Collapse in={expanded} timeout="auto" unmountOnExit>
+                              <CardContent>
+                                   <Issue full_name={item.full_name} opened={expanded} />
+                              </CardContent>
+                         </Collapse>
                     </FullWidthGrid>
                </ListItem>
                <Divider variant="inset" component="li" />
@@ -50,5 +80,16 @@ export default function Card({ item, likeHandler = () => { } }:
 }
 
 const FullWidthGrid = styled(Grid)`
-     width: 100%;
-`
+                    width: 100%;
+                    `
+
+const ExpandMore = styled((props: ExpandMoreProps) => {
+     const { expand, ...other } = props;
+     return <IconButton {...other} />;
+})(({ theme, expand }) => ({
+     transform: !expand ? 'rotate(0deg)' : 'rotate(180deg)',
+     marginLeft: 'auto',
+     // transition: theme.transitions.create('transform', {
+     //      duration: theme.transitions.duration.shortest,
+     // }),
+}));
