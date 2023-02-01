@@ -1,19 +1,17 @@
-import React, { useState, useCallback } from 'react'
+import React, { useCallback } from 'react'
 import styled from 'styled-components'
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import Grid from '@mui/material/Unstable_Grid2';
 
-export default function SearchPart({ setQuery }: { setQuery: React.Dispatch<React.SetStateAction<string>> }) {
-     const [gotSearchText, setGotSearchText] = useState<string>("")
-
-     const onSearch = useCallback(() => {
-          setQuery(gotSearchText)
-     }, [])
+export default function SearchPart({ setSearchingText, onSearch }: {
+     setSearchingText: React.Dispatch<React.SetStateAction<string>>,
+     onSearch: () => void
+}) {
 
      const onChange = useCallback((e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
-          setGotSearchText(e.target.value)
-     }, [setGotSearchText])
+          setSearchingText(e.target.value)
+     }, [setSearchingText])
 
      return (
           <SearchWrapper>

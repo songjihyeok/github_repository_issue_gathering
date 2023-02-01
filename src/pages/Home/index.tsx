@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { useEffect, useState } from "react"
+import { useEffect, useState, useCallback } from "react"
 import List from "@/component/home/List"
 import ContentsWrapper from "@/layout/ContentsWrapper"
 import SearchPart from "@/component/home/SearchPart"
@@ -10,32 +10,37 @@ const octokit = new Octokit({
      auth: process.env.GITHUB_PRIVATE_KEY
 })
 
-
 export default function Home() {
-     const [query, setQuery] = useState<string>("hello");
-     const [searchResultList, setSearchResultLIst] = useState<itemInCludeLikedInterface[]>([])
+     const [searchResultList, setSearchResultList] = useState<itemInCludeLikedInterface[]>([])
+     const [searchedText, setSearchedText] = useState("")
+     const [searchingText, setSearchingText] = useState("")
 
-     useEffect(() => {
-          const getCardList = async () => {
-               const result: resultInterface = await octokit.request(`GET /search/repositories?q=${query}`, {})
-               if (result.status === 200) {
-                    const gotResult = result?.data?.items ?? []
-                    const inCludedLikedPropertyList = gotResult.map((element: itemInterface) => {
-                         return {
-                              ...element,
-                              liked: false
-                         }
-                    })
-                    setSearchResultLIst(inCludedLikedPropertyList);
-               }
+     const getRepoList = useCallback(async () => {
+          const result: resultInterface = await octokit.request(`GET /search/repositories?q=${searchingText}`, {})
+          if (result.status === 200) {
+               const gotResult = result?.data?.items ?? []
+               const inCludedLikedPropertyList = gotResult.map((element: itemInterface) => {
+                    return {
+                         ...element,
+                         liked: false
+                    }
+               })
+               return inCludedLikedPropertyList
           }
-          getCardList()
-     }, [])
+          return []
+     }
+          , [])
+     const onSearch = useCallback(async () => {
+          const result = await getRepoList()
+          setSearchResultList(result)
+          setSearchedText(searchingText)
+     }, [searchingText, setSearchedText, getRepoList])
+
 
      return (
           <ContentsWrapper>
-               <SearchPart setQuery={setQuery} />
-               <List searchResultList={searchResultList} setSearchResultList={setSearchResultLIst} />
+               <SearchPart setSearchingText={setSearchingText} onSearch={onSearch} />
+               <List searchResultList={searchResultList} setSearchResultList={setSearchResultList} />
           </ContentsWrapper>
      );
 }
