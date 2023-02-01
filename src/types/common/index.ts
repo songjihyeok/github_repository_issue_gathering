@@ -12,6 +12,7 @@ export interface itemInCludeLikedInterface extends itemInterface {
      liked: boolean
 }
 
+
 export interface resultInterface {
      status: number
      data: {

@@ -1,18 +1,15 @@
 import ContentsWrapper from '@/layout/ContentsWrapper';
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
-import List from '@/component/home/List';
+import LikedList from '@/component/liked/List';
 import { Octokit } from "octokit"
-import { itemInCludeLikedInterface, itemInterface } from '@/pages/Home/type';
+import { itemInCludeLikedInterface, itemInterface } from '@/types/common'
 
 const octokit = new Octokit({
      auth: process.env.GITHUB_PRIVATE_KEY
 })
 
-
-
 export default function Liked() {
-
 
      const [likedList, setLikedList] = useState<itemInCludeLikedInterface[]>([])
      const checkLikedList = likedList.filter((element: itemInCludeLikedInterface) => element.liked === true)
@@ -42,9 +39,11 @@ export default function Liked() {
           getLikedListInfoFromGit()
      }, [])
 
+
+
      return (
           <ContentsWrapper>
-               <List searchResultList={checkLikedList} setSearchResultList={setLikedList} />
+               <LikedList searchResultList={checkLikedList} setSearchResultList={setLikedList} />
           </ContentsWrapper>
      );
 }

@@ -4,7 +4,7 @@ import List from "@/component/home/List"
 import ContentsWrapper from "@/layout/ContentsWrapper"
 import SearchPart from "@/component/home/SearchPart"
 import { Octokit } from "octokit"
-import { itemInterface, resultInterface, itemInCludeLikedInterface } from '@/pages/Home/type'
+import { itemInterface, resultInterface, itemInCludeLikedInterface } from '@/types/common'
 
 const octokit = new Octokit({
      auth: process.env.GITHUB_PRIVATE_KEY
@@ -29,7 +29,8 @@ export default function Home() {
           }
           return []
      }
-          , [])
+          , [searchingText])
+
      const onSearch = useCallback(async () => {
           const result = await getRepoList()
           setSearchResultList(result)

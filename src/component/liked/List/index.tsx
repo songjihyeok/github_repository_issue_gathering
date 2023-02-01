@@ -1,5 +1,5 @@
 import React from 'react'
-import Card from "../../common/Card"
+import LikedCard from "@/component/liked/LikedCard"
 import { itemInCludeLikedInterface } from '@/types/common'
 
 
@@ -72,7 +72,7 @@ export default function List({ searchResultList, setSearchResultList }: {
      return (
           <>
                {likedCheckedSearchResultList.map((element: itemInCludeLikedInterface, index: number) => {
-                    return <Card key={index}
+                    return <LikedCard key={index}
                          item={element}
                          likeHandler={likeHandler}
                     />

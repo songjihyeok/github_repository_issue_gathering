@@ -3,7 +3,10 @@ export interface issueDataInterface {
      title: string
      body?: string
      html_url: string
-     repository_url: string
      state: string
-     repository_name?: string
 }
+
+export interface issueWithRepositoryName extends issueDataInterface {
+     repository_name: string
+}
+

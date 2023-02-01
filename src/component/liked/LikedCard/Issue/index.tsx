@@ -2,10 +2,11 @@ import React, { useEffect, useState, useReducer } from 'react'
 import styled from 'styled-components'
 import ContentsWrapper from "@/layout/ContentsWrapper"
 import { Octokit } from "octokit"
-import IssueCard from "@/component/common/IssueCard"
-import { itemInCludeLikedInterface } from '@/pages/Home/type'
-import { issueDataInterface } from "@/component/Issue/type"
+import LikedCard from "@/component/liked/LikedCard"
+import { itemInCludeLikedInterface } from "@/types/common"
+import { issueDataInterface, issueWithRepositoryName } from "@/component/liked/LikedCard/Issue/type"
 import Pagination from '@mui/material/Pagination';
+import IssueCard from "@/component/liked/LikedCard/Issue/IssueCard"
 import Stack from '@mui/material/Stack';
 
 const octokit = new Octokit({
@@ -20,7 +21,7 @@ enum statusEnum {
 
 
 export default function Issue({ full_name, opened }: { full_name: string, opened: boolean }) {
-     const [issuesList, setIssuesList] = useState<issueDataInterface[]>([])
+     const [issuesList, setIssuesList] = useState<issueWithRepositoryName[]>([])
      const [status, setStatus] = useState<statusEnum>(statusEnum.all)
      const [totalCounts, setTotalCounts] = useState(0)
      const [page, setPage] = useState(1)
@@ -43,9 +44,10 @@ export default function Issue({ full_name, opened }: { full_name: string, opened
                     page: page,
                     per_page: 10
                })
+               console.log("result", result)
                const gotItems = result?.data?.items ?? []
                const gotTotalCounts = result?.data?.total_count ?? 0
-               const repositoryNameAddedGotData = gotItems.map((element: issueDataInterface) => {
+               const repositoryNameAddedGotData: issueWithRepositoryName[] = gotItems.map((element: issueDataInterface) => {
                     return {
                          ...element,
                          repository_name: full_name
@@ -61,8 +63,8 @@ export default function Issue({ full_name, opened }: { full_name: string, opened
           <>
                {opened ?
                     <>
-                         {issuesList.map((element: issueDataInterface) => {
-                              return <IssueCard key={element.id} item={element} ></IssueCard>
+                         {issuesList.map((element, index) => {
+                              return <IssueCard key={index} item={element} />
                          })}
                          {issuesList.length > 0 ?
                               < PaginationWrapper >
