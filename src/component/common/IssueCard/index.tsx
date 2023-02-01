@@ -7,7 +7,7 @@ import ListItemText from '@mui/material/ListItemText';
 import Typography from '@mui/material/Typography';
 import { itemInCludeLikedInterface } from '@/types/common'
 import Grid from '@mui/material/Unstable_Grid2';
-import { issueWithRepositoryName } from '../type';
+import { issueWithRepositoryName } from '../LikedCard/Issue/type';
 
 export default function IssueCard({ item }:
      {

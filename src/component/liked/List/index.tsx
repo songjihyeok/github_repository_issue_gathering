@@ -1,5 +1,5 @@
 import React from 'react'
-import LikedCard from "@/component/liked/LikedCard"
+import LikedCard from "@/component/common/LikedCard"
 import { itemInCludeLikedInterface } from '@/types/common'
 
 
@@ -50,19 +50,12 @@ export default function List({ searchResultList, setSearchResultList }: {
                return localStorage.setItem("likedIdList", removedLikedList)
           } else {
                const modifiedItem = {
-                    id: item?.id,
-                    description: item?.description,
-                    issues_url: item?.issues_url,
-                    full_name: item?.full_name,
-                    forks_count: item?.forks_count,
-                    created_at: item?.created_at,
-                    html_url: item?.html_url,
+                    ...item,
                     liked: true
                }
-               const likedCheckedItem = { ...modifiedItem, liked: true }
                const updatedLikedList = JSON.stringify(
                     {
-                         data: [...likedList, likedCheckedItem]
+                         data: [...likedList, modifiedItem]
                     })
                return localStorage.setItem("likedIdList", updatedLikedList)
           }

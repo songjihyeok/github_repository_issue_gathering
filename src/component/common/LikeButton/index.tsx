@@ -2,7 +2,7 @@ import { Fab } from '@mui/material';
 import Favorite from "@mui/icons-material/Favorite"
 
 
-export default function like({ liked = false, onClick }: { liked?: boolean, onClick: React.MouseEventHandler<HTMLButtonElement> | undefined }) {
+export default function likeButton({ liked = false, onClick }: { liked?: boolean, onClick: React.MouseEventHandler<HTMLButtonElement> | undefined }) {
      return (
           <>
                {liked ?

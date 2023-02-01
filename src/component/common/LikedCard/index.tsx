@@ -12,8 +12,8 @@ import IconButton, { IconButtonProps } from '@mui/material/IconButton';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import CardContent from '@mui/material/CardContent';
 import Collapse from '@mui/material/Collapse';
-import Issue from '@/component/liked/LikedCard/Issue';
-import Like from "@/component/common/like"
+import Issue from '@/component/common/LikedCard/Issue';
+import Like from "@/component/common/LikeButton"
 
 interface ExpandMoreProps extends IconButtonProps {
      expand: boolean;
@@ -31,10 +31,6 @@ export default function LikedCard({ item, likeHandler }:
      const handleExpandClick = () => {
           setExpanded(!expanded)
      }
-
-     // const onOpenGitRepository = () => {
-     //      window.open(item.html_url, '_blank')
-     // }
 
      return (
           <List sx={{ width: '100%', bgcolor: 'background.paper' }}>

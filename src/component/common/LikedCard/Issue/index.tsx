@@ -2,11 +2,11 @@ import React, { useEffect, useState, useReducer } from 'react'
 import styled from 'styled-components'
 import ContentsWrapper from "@/layout/ContentsWrapper"
 import { Octokit } from "octokit"
-import LikedCard from "@/component/liked/LikedCard"
+import LikedCard from "@/component/common/LikedCard"
 import { itemInCludeLikedInterface } from "@/types/common"
-import { issueDataInterface, issueWithRepositoryName } from "@/component/liked/LikedCard/Issue/type"
+import { issueDataInterface, issueWithRepositoryName } from "@/component/common/LikedCard/Issue/type"
 import Pagination from '@mui/material/Pagination';
-import IssueCard from "@/component/liked/LikedCard/Issue/IssueCard"
+import IssueCard from "@/component/common/IssueCard"
 import Stack from '@mui/material/Stack';
 
 const octokit = new Octokit({
@@ -44,7 +44,6 @@ export default function Issue({ full_name, opened }: { full_name: string, opened
                     page: page,
                     per_page: 10
                })
-               console.log("result", result)
                const gotItems = result?.data?.items ?? []
                const gotTotalCounts = result?.data?.total_count ?? 0
                const repositoryNameAddedGotData: issueWithRepositoryName[] = gotItems.map((element: issueDataInterface) => {
