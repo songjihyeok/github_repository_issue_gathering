@@ -49,6 +49,13 @@ export default function Liked() {
           </ProgressWrapper>
      }
 
+     if (checkLikedList.length === 0) {
+          return <FullPageCenter>
+               <h1>등록한 레포지토리가 없습니다.</h1>
+          </FullPageCenter>
+     }
+
+
      return (
           <LikedListWrapper as={ContentsWrapper} className="likedList">
                <LikedList searchResultList={checkLikedList} setSearchResultList={setLikedList} />
@@ -62,6 +69,14 @@ const LikedListWrapper = styled.div`
      }
 `
 
+
+const FullPageCenter = styled.div`
+     width: 100%;
+     height: calc(100vh - 68.5px);
+     display: flex;
+     justify-content: center;
+     align-items: center;
+`
 
 
 const ProgressWrapper = styled.div`
