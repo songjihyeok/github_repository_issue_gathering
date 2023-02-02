@@ -26,7 +26,7 @@ node modules 설치를 위해 해당 스크립트 실행 필요
 
 2. 검색된 Public Repository를 등록할 수 있다.
     - 등록 개수는 최대 4개로 제한하며, 최대 개수 초과 등록 시 이를 사용자에게 알려준다.
-
+     > alert로 알려줌
     - 웹은 LocalStorage, 앱은 Async Storage 등 로컬 저장소를 활용한다. (웹 혹은 앱 선택)
     > localStorage 활용 저장
 
@@ -34,6 +34,7 @@ node modules 설치를 위해 해당 스크립트 실행 필요
     > liked Button 다시 누르면 삭제
 
 4. 등록된 각각의 Public Repository의 issue를 한 페이지에서 모아서 볼 수 있다.
+     > /liked 페이지에서 확인 가능
     - 각 issue 마다 제목, Repository 명은 필수로 표현되어야 한다. 그 이외의 데이터 중 필요하다고 생각되는 부분은 추가한다.
      > 깃헙 레포마다 issues 버튼이 있으며 누르면 리스트가 나옴
 

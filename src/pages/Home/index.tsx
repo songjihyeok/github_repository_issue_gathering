@@ -1,5 +1,4 @@
-import styled from 'styled-components'
-import { useEffect, useState, useCallback } from "react"
+import { useState, useCallback } from "react"
 import List from "@/component/home/List"
 import ContentsWrapper from "@/layout/ContentsWrapper"
 import SearchPart from "@/component/home/SearchPart"
