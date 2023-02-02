@@ -17,10 +17,10 @@ export default function Card({ item, likeHandler = () => { } }:
 
 
 
-     return (
+     return (<>
           <List sx={{ width: '100%', bgcolor: 'background.paper' }}>
                <ListItem>
-                    <FullWidthGrid container spacing={2} >
+                    <FullWidthGrid container>
                          <Grid xs={10} >
                               <ListItemText
                                    primary={item.full_name}
@@ -41,14 +41,18 @@ export default function Card({ item, likeHandler = () => { } }:
                          <Grid xsOffset={1} xs={1}>
                               <Like liked={item.liked} onClick={() => likeHandler(item)}></Like>
                          </Grid>
+
                     </FullWidthGrid>
+
                </ListItem>
+
                <Divider variant="inset" component="li" />
           </List>
+     </>
      );
 }
 
 const FullWidthGrid = styled(Grid)`
-                    width: 100%;
+     width: 100%;
 `
 

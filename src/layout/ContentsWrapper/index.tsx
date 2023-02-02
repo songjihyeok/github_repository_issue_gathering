@@ -1,9 +1,9 @@
 import React from 'react'
 import styled from 'styled-components'
 
-export default function ContentsWrapper({ children }: { children: React.ReactNode }) {
+export default function ContentsWrapper({ children, className }: { children: React.ReactNode, className?: string }) {
      return (
-          <StyledContentsWrapper>
+          <StyledContentsWrapper className={className}>
                {children}
           </StyledContentsWrapper>
      );

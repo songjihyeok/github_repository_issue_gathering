@@ -1,13 +1,12 @@
-import React, { useEffect, useState, useReducer } from 'react'
+import { useEffect, useState } from 'react'
 import styled from 'styled-components'
-import ContentsWrapper from "@/layout/ContentsWrapper"
 import { Octokit } from "octokit"
-import LikedCard from "@/component/common/LikedCard"
-import { itemInCludeLikedInterface } from "@/types/common"
 import { issueDataInterface, issueWithRepositoryName } from "@/component/common/LikedCard/Issue/type"
 import Pagination from '@mui/material/Pagination';
 import IssueCard from "@/component/common/IssueCard"
-import Stack from '@mui/material/Stack';
+import CircularProgress from '@mui/material/CircularProgress';
+import CommonModal from "@/component/common/Modal"
+import Alert from '@mui/material/Alert';
 
 const octokit = new Octokit({
      auth: process.env.GITHUB_PRIVATE_KEY
@@ -22,6 +21,8 @@ enum statusEnum {
 
 export default function Issue({ full_name, opened }: { full_name: string, opened: boolean }) {
      const [issuesList, setIssuesList] = useState<issueWithRepositoryName[]>([])
+     const [loading, setLoading] = useState<boolean>(true)
+     const [openModal, setOpenModal] = useState<boolean>(false)
      const [status, setStatus] = useState<statusEnum>(statusEnum.all)
      const [totalCounts, setTotalCounts] = useState(0)
      const [page, setPage] = useState(1)
@@ -30,9 +31,11 @@ export default function Issue({ full_name, opened }: { full_name: string, opened
 
      const handleChange = (page: number) => {
           if (page > 100) {
+               setOpenModal(true)
                return
           }
           setPage(page)
+          setOpenModal(false)
      }
 
 
@@ -52,11 +55,23 @@ export default function Issue({ full_name, opened }: { full_name: string, opened
                          repository_name: full_name
                     }
                })
+               setLoading(false)
                setIssuesList(repositoryNameAddedGotData)
                setTotalCounts(gotTotalCounts)
           }
-          getIssues()
+          if (opened) {
+               getIssues()
+          }
      }, [opened, full_name, status, page])
+
+
+     if (loading) {
+          return <ProgressWrapper>
+               <CircularProgress size={"50px"} />
+          </ProgressWrapper>
+     }
+
+
 
      return (
           <>
@@ -70,11 +85,20 @@ export default function Issue({ full_name, opened }: { full_name: string, opened
                                    <Pagination count={pageNumbers} page={page} onChange={(_, page: number) => handleChange(page)} />
                               </PaginationWrapper>
                               : null}
+                         {openModal ? <Alert severity="error">깃헙 정책 상 1000개 이후엔 검색이 되지 않습니다. </Alert> : null}
                     </> : null
                }
           </>
      );
 }
+
+const ProgressWrapper = styled.div`
+     width: 100%;
+     height: 800px;
+     justify-content:center;
+     align-items:center;
+     display:flex;
+`
 
 const PaginationWrapper = styled.div`
      width: 100%;

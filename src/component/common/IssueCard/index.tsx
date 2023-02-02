@@ -1,11 +1,10 @@
-import React, { useState } from 'react'
+import React from 'react'
 import styled from 'styled-components'
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import Divider from '@mui/material/Divider';
 import ListItemText from '@mui/material/ListItemText';
 import Typography from '@mui/material/Typography';
-import { itemInCludeLikedInterface } from '@/types/common'
 import Grid from '@mui/material/Unstable_Grid2';
 import { issueWithRepositoryName } from '../LikedCard/Issue/type';
 
@@ -14,10 +13,13 @@ export default function IssueCard({ item }:
           item: issueWithRepositoryName,
      }) {
 
+     const onClickIssue = () => {
+          window.open(item.html_url, "_blank")
+     }
 
 
      return (
-          <List sx={{ width: '100%', bgcolor: 'background.paper' }}>
+          <List sx={{ width: '100%', bgcolor: 'background.paper' }} onClick={onClickIssue}>
                <ListItem>
                     <FullWidthGrid container spacing={2} >
                          <Grid xs={10} >
@@ -37,15 +39,15 @@ export default function IssueCard({ item }:
                                    }
                               />
                          </Grid>
-
+                         <Divider variant="inset" component="li" />
                     </FullWidthGrid>
                </ListItem>
-               <Divider variant="inset" component="li" />
+
           </List>
      );
 }
 
 const FullWidthGrid = styled(Grid)`
-                    width: 100%;
+     width: 100%;
 `
 

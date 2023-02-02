@@ -1,9 +1,11 @@
 import ContentsWrapper from '@/layout/ContentsWrapper';
-import React, { useState, useEffect } from 'react'
-import styled from 'styled-components'
+import { useState, useEffect } from 'react'
 import LikedList from '@/component/liked/List';
+import styled from "styled-components"
+import CircularProgress from '@mui/material/CircularProgress';
 import { Octokit } from "octokit"
-import { itemInCludeLikedInterface, itemInterface } from '@/types/common'
+import Box from '@mui/material/Box';
+import { itemInCludeLikedInterface } from '@/types/common'
 
 const octokit = new Octokit({
      auth: process.env.GITHUB_PRIVATE_KEY
@@ -12,6 +14,7 @@ const octokit = new Octokit({
 export default function Liked() {
 
      const [likedList, setLikedList] = useState<itemInCludeLikedInterface[]>([])
+     const [loading, setLoading] = useState<boolean>(true)
      const checkLikedList = likedList.filter((element: itemInCludeLikedInterface) => element.liked === true)
 
      useEffect(() => {
@@ -29,22 +32,43 @@ export default function Liked() {
                     const item = result?.data?.items[0] ?? null
                     if (item) {
                          const likedAddedItem = { liked, ...item }
+
                          return [...gotAccumulator, likedAddedItem]
                     } else {
                          return gotAccumulator
                     }
                }, [])
+               setLoading(false)
                setLikedList(result)
           }
           getLikedListInfoFromGit()
      }, [])
 
-
+     if (loading) {
+          return <ProgressWrapper>
+               <CircularProgress size={"70px"} />
+          </ProgressWrapper>
+     }
 
      return (
-          <ContentsWrapper>
+          <LikedListWrapper as={ContentsWrapper} className="likedList">
                <LikedList searchResultList={checkLikedList} setSearchResultList={setLikedList} />
-          </ContentsWrapper>
+          </LikedListWrapper>
      );
 }
 
+const LikedListWrapper = styled.div`
+     && {
+          padding: 30px 0;
+     }
+`
+
+
+
+const ProgressWrapper = styled.div`
+     width: 100%;
+     height: calc(100vh - 68.5px);
+     justify-content:center;
+     align-items:center;
+     display:flex;
+`
