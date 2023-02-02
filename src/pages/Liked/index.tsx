@@ -4,7 +4,6 @@ import LikedList from '@/component/liked/List';
 import styled from "styled-components"
 import CircularProgress from '@mui/material/CircularProgress';
 import { Octokit } from "octokit"
-import Box from '@mui/material/Box';
 import { itemInCludeLikedInterface } from '@/types/common'
 
 const octokit = new Octokit({

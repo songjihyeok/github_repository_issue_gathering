@@ -8,17 +8,27 @@ import Typography from '@mui/material/Typography';
 import { itemInCludeLikedInterface } from '@/types/common'
 import Grid from '@mui/material/Unstable_Grid2';
 import Like from "@/component/common/LikeButton"
+import Alert from '@mui/material/Alert';
 
-export default function Card({ item, likeHandler = () => { } }:
+
+export default function Card({
+     item,
+     likeHandler = () => { },
+     error
+}:
      {
           item: itemInCludeLikedInterface,
           likeHandler?: (element: itemInCludeLikedInterface) => void
+          error: {
+               status: boolean;
+               elementId: number;
+          }
      }) {
 
 
 
      return (<>
-          <List sx={{ width: '100%', bgcolor: 'background.paper' }}>
+          <List sx={{ width: '100%' }}>
                <ListItem>
                     <FullWidthGrid container>
                          <Grid xs={10} >
@@ -45,8 +55,9 @@ export default function Card({ item, likeHandler = () => { } }:
                     </FullWidthGrid>
 
                </ListItem>
-
-               <Divider variant="inset" component="li" />
+               {error.status && error.elementId === item.id ? <><Alert severity="error"> 5개 이상 등록되지 않습니다. </Alert>
+               </> : null}
+               <Divider />
           </List>
      </>
      );

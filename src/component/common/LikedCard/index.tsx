@@ -84,7 +84,7 @@ export default function LikedCard({ item, likeHandler }:
                          <Issue full_name={item.full_name} opened={expanded} />
                     </CardContent>
                </Collapse>
-               <Divider variant="inset" component="li" />
+               <Divider />
           </List>
      );
 }

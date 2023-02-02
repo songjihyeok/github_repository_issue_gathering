@@ -5,25 +5,16 @@ import { issueDataInterface, issueWithRepositoryName } from "@/component/common/
 import Pagination from '@mui/material/Pagination';
 import IssueCard from "@/component/common/IssueCard"
 import CircularProgress from '@mui/material/CircularProgress';
-import CommonModal from "@/component/common/Modal"
 import Alert from '@mui/material/Alert';
 
 const octokit = new Octokit({
      auth: process.env.GITHUB_PRIVATE_KEY
 })
 
-enum statusEnum {
-     open = "open",
-     closed = "closed",
-     all = "all"
-}
-
-
 export default function Issue({ full_name, opened }: { full_name: string, opened: boolean }) {
      const [issuesList, setIssuesList] = useState<issueWithRepositoryName[]>([])
      const [loading, setLoading] = useState<boolean>(true)
      const [openModal, setOpenModal] = useState<boolean>(false)
-     const [status, setStatus] = useState<statusEnum>(statusEnum.all)
      const [totalCounts, setTotalCounts] = useState(0)
      const [page, setPage] = useState(1)
      const pageNumbers = Math.floor(totalCounts / 10) + 1
@@ -45,7 +36,7 @@ export default function Issue({ full_name, opened }: { full_name: string, opened
                const result = await octokit.request(`GET /search/issues`, {
                     q: queryString,
                     page: page,
-                    per_page: 10
+                    per_page: 10,
                })
                const gotItems = result?.data?.items ?? []
                const gotTotalCounts = result?.data?.total_count ?? 0
@@ -62,7 +53,7 @@ export default function Issue({ full_name, opened }: { full_name: string, opened
           if (opened) {
                getIssues()
           }
-     }, [opened, full_name, status, page])
+     }, [opened, full_name, page])
 
 
      if (loading) {

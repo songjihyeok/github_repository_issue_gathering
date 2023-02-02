@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Card from "../../common/Card"
 import { itemInCludeLikedInterface } from '@/types/common'
 
@@ -7,6 +7,13 @@ export default function List({ searchResultList, setSearchResultList }: {
      searchResultList: itemInCludeLikedInterface[],
      setSearchResultList: React.Dispatch<React.SetStateAction<itemInCludeLikedInterface[]>>
 }) {
+     const [error, setError] = useState<{
+          status: boolean;
+          elementId: number;
+     }>({
+          status: false,
+          elementId: 0
+     });
      const localLikedIdList = localStorage.getItem("likedIdList") ?? JSON.stringify({ data: [] })
      const likedIdList = JSON.parse(localLikedIdList).data
           .map((element: itemInCludeLikedInterface) => element.id) ?? []
@@ -22,6 +29,15 @@ export default function List({ searchResultList, setSearchResultList }: {
      })
 
      const likeHandler = (element: itemInCludeLikedInterface) => {
+
+          if (likedIdList.length >= 4 && !element.liked) {
+               setError({
+                    status: true,
+                    elementId: element.id
+               })
+               return
+          }
+
           const likeHandledResultList = searchResultList.map((item) => {
                if (item.id === element.id) {
                     return {
@@ -32,7 +48,10 @@ export default function List({ searchResultList, setSearchResultList }: {
                     return item
                }
           })
-
+          setError({
+               status: false,
+               elementId: 0
+          })
           setSearchResultList(likeHandledResultList)
           setLocalStorage(element)
      }
@@ -68,6 +87,7 @@ export default function List({ searchResultList, setSearchResultList }: {
                     return <Card key={index}
                          item={element}
                          likeHandler={likeHandler}
+                         error={error}
                     />
                })}
           </>

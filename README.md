@@ -1,46 +1,44 @@
-# Getting Started with Create React App
+# CRA 로 제작
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+ 본 프로젝트는 github api를 활용하는 프로젝트이기에 .env.develop 파일을 루트에 생성 이후, 
 
-## Available Scripts
+ GITHUB_PRIVATE_KEY = GITHUB_API_KEY
 
-In the project directory, you can run:
+위와 같은 환경 변수를 저장이 필요합니다. 
+
+
+* 주의
+liked 페이지의 첫 로딩이 좀 느릴 수 있습니다. 모든 등록한 repo의 최신 데이터를 하나씩 가져오는 과정으로 인해 등록한 repo가 많을 경우 시간이 좀 걸립니다. 
+그리고 github api 특성상 request를 많이 날리면 금방 한계치에 도달합니다. 
+
+
+### `npm install` 
+
+node modules 설치를 위해 해당 스크립트 실행 필요
 
 ### `npm start`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+[http://localhost:3000](http://localhost:3000)에 접속
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+### 요청사항 구현 완료 
+1. 검색창에 Repository명을 입력해서 Repository를 검색할 수 있다. 
+> /home 에서 검색 가능
 
-### `npm test`
+2. 검색된 Public Repository를 등록할 수 있다.
+    - 등록 개수는 최대 4개로 제한하며, 최대 개수 초과 등록 시 이를 사용자에게 알려준다.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+    - 웹은 LocalStorage, 앱은 Async Storage 등 로컬 저장소를 활용한다. (웹 혹은 앱 선택)
+    > localStorage 활용 저장
 
-### `npm run build`
+3. 등록된 Repository를 삭제할 수 있다.
+    > liked Button 다시 누르면 삭제
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+4. 등록된 각각의 Public Repository의 issue를 한 페이지에서 모아서 볼 수 있다.
+    - 각 issue 마다 제목, Repository 명은 필수로 표현되어야 한다. 그 이외의 데이터 중 필요하다고 생각되는 부분은 추가한다.
+     > 깃헙 레포마다 issues 버튼이 있으며 누르면 리스트가 나옴
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+    - 해당 issue를 클릭하면 Github의 상세 페이지로 이동할 수 있다.
+    > 외부로 링크 상세 페이지 이동
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+    - 페이지네이션을 통해서 계속해서 issue를 모아서 볼 수 있다.
+    > 페이지네이션 개발 완료

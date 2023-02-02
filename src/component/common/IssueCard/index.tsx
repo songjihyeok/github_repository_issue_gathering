@@ -19,7 +19,7 @@ export default function IssueCard({ item }:
 
 
      return (
-          <List sx={{ width: '100%', bgcolor: 'background.paper' }} onClick={onClickIssue}>
+          <List sx={{ width: '100%', bgcolor: 'background.paper', cursor: "pointer" }} onClick={onClickIssue}>
                <ListItem>
                     <FullWidthGrid container spacing={2} >
                          <Grid xs={10} >
@@ -39,10 +39,10 @@ export default function IssueCard({ item }:
                                    }
                               />
                          </Grid>
-                         <Divider variant="inset" component="li" />
+
                     </FullWidthGrid>
                </ListItem>
-
+               <Divider />
           </List>
      );
 }

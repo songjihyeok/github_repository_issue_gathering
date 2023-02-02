@@ -12,7 +12,6 @@ const octokit = new Octokit({
 
 export default function Home() {
      const [searchResultList, setSearchResultList] = useState<itemInCludeLikedInterface[]>([])
-     const [searchedText, setSearchedText] = useState("")
      const [searchingText, setSearchingText] = useState("")
 
      const getRepoList = useCallback(async () => {
@@ -34,8 +33,7 @@ export default function Home() {
      const onSearch = useCallback(async () => {
           const result = await getRepoList()
           setSearchResultList(result)
-          setSearchedText(searchingText)
-     }, [searchingText, setSearchedText, getRepoList])
+     }, [getRepoList, setSearchResultList])
 
 
      return (
